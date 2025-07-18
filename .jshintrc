@@ -1,0 +1,9 @@
+{
+  "esversion": 8,
+  "node": true,
+  "globals": {
+    "require": true,
+    "module": true,
+    "__dirname": true
+  }
+}
