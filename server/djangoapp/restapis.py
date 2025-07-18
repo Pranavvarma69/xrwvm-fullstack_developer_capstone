@@ -6,12 +6,12 @@ from urllib.parse import quote_plus
 # Load environment variables from .env file
 load_dotenv()
 
-# Set backend and sentiment analysis service URLs
+# Set backend and sentiment analysis service URLs from env
 backend_url = os.getenv('backend_url', default="http://localhost:3030")
 sentiment_analyzer_url = os.getenv('sentiment_analyzer_url', default="http://localhost:5050/")
 
 
-# GET request to back end with optional parameters
+# Function to perform GET requests
 def get_request(endpoint, **kwargs):
     params = ''
     if kwargs:
@@ -32,10 +32,10 @@ def get_request(endpoint, **kwargs):
         return None
 
 
-# Retrieve sentiment for a given review text
+# Analyze sentiment using external service
 def analyze_review_sentiments(text):
     encoded_text = quote_plus(text)
-    request_url = f"{sentiment_analyzer_url}analyze/{encoded_text}"
+    request_url = f"{sentiment_analyzer_url}/analyze/{encoded_text}"
     try:
         response = requests.get(request_url)
         response.raise_for_status()
@@ -45,7 +45,7 @@ def analyze_review_sentiments(text):
         return {"sentiment": "unknown"}
 
 
-# POST review to back end
+# POST review to backend API
 def post_review(data_dict):
     request_url = f"{backend_url}/insert_review"
     try:
